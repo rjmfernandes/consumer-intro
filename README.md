@@ -2,12 +2,6 @@
 
 Introduction to Kafka Consumers.
 
-## Cleanup
-
-```bash
-docker compose down -v
-```
-
 ## Setup
 
 ### Start Docker Compose
@@ -126,4 +120,9 @@ Now let's run our File Writer java consumer client io.confluent.csta.consumer.fi
 
 It will generate a file named consumer-records.out. If you are executing from inside an IDE you may need to reload from disk to see the file generated.
 
+## Cleanup
+
+```bash
+docker compose down -v
+```
 
