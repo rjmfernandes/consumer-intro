@@ -100,60 +100,27 @@ console-consumer-18016
 
 ## Basic Java Consumer Client
 
-Now let's run our basic java consumer client io.confluent.csta.consumer.basic.BasicConsumer:
+Now let's run our basic java consumer client io.confluent.csta.consumer.basic.BasicConsumer.
 
-```java
+If you stop and try to run again you should see no records are polled.
 
-        Properties properties = new Properties();
-        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, SERVER);
-        properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
-        properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+Check consumer groups and you should see:
 
-        KafkaConsumer<String, String> consumer = new KafkaConsumer(properties);
-
-        try {
-            consumer.subscribe(Arrays.asList(TOPIC));
-
-            final Thread mainThread = Thread.currentThread();
-
-            // adding the shutdown hook
-            Runtime.getRuntime().addShutdownHook(new Thread() {
-                public void run() {
-                    log.info("Detected a shutdown, let's exit by calling consumer.wakeup()...");
-                    consumer.wakeup();
-
-                    // join the main thread to allow the execution of the code in the main thread
-                    try {
-                        mainThread.join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            while (true) {
-                log.info("Polling records...");
-                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
-                log.info("Records processing...");
-                for (ConsumerRecord<String, String> record : records) {
-                    log.info(
-                            "Message with Value: " + record.value() +
-                                    "\n\tPartition: " + record.partition() +
-                                    "\n\tOffset: " + record.offset()
-                    );
-                }
-            }
-        } catch (WakeupException e) {
-            log.info("Wake up exception!");
-            // we ignore this as this is an expected exception when closing a consumer
-        } catch (Exception e) {
-            log.error("Unexpected exception", e);
-        } finally {
-            log.info("The consumer is now gracefully closed.");
-            consumer.close();
-        }
-
+```text
+_confluent-controlcenter-7-5-2-1-command
+ConfluentTelemetryReporterSampler-1669283023291673816
+io.confluent.csta.consumer.basic.BasicConsumer
 ```
+
+You can reset the offsets by executing :
+
+```bash
+kafka-consumer-groups --bootstrap-server localhost:19092 --delete-offsets  --group io.confluent.csta.consumer.basic.BasicConsumer --topic test-topic
+```
+
+If you execute again you should see records being polled.
+
+
+
+
 
