@@ -120,7 +120,10 @@ kafka-consumer-groups --bootstrap-server localhost:19092 --delete-offsets  --gro
 
 If you execute again you should see records being polled.
 
+## File Writer Java Consumer Client
 
+Now let's run our File Writer java consumer client io.confluent.csta.consumer.filewriter.KafkaConsumerApp.
 
+It will generate a file named consumer-records.out. If you are executing from inside an IDE you may need to reload from disk to see the file generated.
 
 
