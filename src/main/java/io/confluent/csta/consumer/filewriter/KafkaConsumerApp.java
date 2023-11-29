@@ -13,8 +13,8 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 public class KafkaConsumerApp {
 
     private volatile boolean keepConsuming = true;
-    private ConsumerRecordsHandler<String, String> recordsHandler;
-    private Consumer<String, String> consumer;
+    private final ConsumerRecordsHandler<String, String> recordsHandler;
+    private final Consumer<String, String> consumer;
 
     public KafkaConsumerApp(final Consumer<String, String> consumer,
                             final ConsumerRecordsHandler<String, String> recordsHandler) {

@@ -29,7 +29,7 @@ public class BasicConsumer {
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
-        KafkaConsumer<String, String> consumer = new KafkaConsumer(properties);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
 
         try {
             consumer.subscribe(Arrays.asList(TOPIC));

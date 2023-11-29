@@ -1,8 +1,6 @@
 package io.confluent.csta.consumer.filewriter;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileWriterRecordsHandler implements ConsumerRecordsHandler<String,String> {
-    private static final Logger log = LoggerFactory.getLogger(FileWriterRecordsHandler.class);
-    private Path path;
+    private final Path path;
 
     public FileWriterRecordsHandler(Path path) {
         this.path=path;
